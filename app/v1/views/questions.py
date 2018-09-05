@@ -50,8 +50,15 @@ def get_questions():
     return response, 200
 
 
-@questions.route('questions/<question_id>', methods=['GET'])
+@questions.route('/questions/<question_id>', methods=['GET'])
 def fetch_specific_question(question_id):
     """Method to fetch a specific question using id"""
+    all_questions = question_instance.questions
 
-    return jsonify({"Question": "Question matching id"})
+    # Check if question exists
+    for id in all_questions:
+        if question_id == id:
+            response = jsonify({"message": all_questions[id]})
+            return response, 200
+    response = jsonify({"Error": "A question with that id doesn't exist"})
+    return response, 404
