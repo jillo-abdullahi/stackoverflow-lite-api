@@ -3,7 +3,8 @@
 
 def check_keys(args, length):
     """Function to check if dict keys are provided"""
-    params = ['email', 'username', 'password', 'full-name']
+    params = ['email', 'username', 'password', 'full-name',
+              'title', 'description']
     for key in args.keys():
         if key not in params or len(args) != length:
             return True
