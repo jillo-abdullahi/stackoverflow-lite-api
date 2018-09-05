@@ -1,8 +1,7 @@
 # app/v1/views/auth
 
-from flask import Blueprint, jsonify, g, request
+from flask import Blueprint, jsonify, request
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_expects_json import expects_json
 
 from app.v1.models import User
 from app.utilities import check_empty_dict, check_keys
@@ -28,8 +27,6 @@ def user_signup():
         response = jsonify({"Error": "Fields should not be empty"})
         return response, 400
 
-    user_info["password"] = generate_password_hash(user_info["password"])
-
     # Check if user already exists
     existing_users = user_instance.users
     for id in existing_users:
@@ -38,6 +35,7 @@ def user_signup():
                 {"Error": "A user with username, {} already exists".format(user_info['username'])})
             return response, 400
 
+    user_info["password"] = generate_password_hash(user_info["password"])
     user_instance.save(user_info)
     response = jsonify({"Users": existing_users,
                         "message": "User registered successfully"})
