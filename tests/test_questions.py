@@ -21,27 +21,30 @@ class TestQuestions(unittest.TestCase):
 
     def test_user_can_get_all_questions(self):
         """Method to test if user can get all questions"""
-        # First add a question
-        response = add_question()
-        self.assertEqual(response.status_code, 201)
 
         # Attempt to get all questions
         get_response = self.app.get('/stackoverflowlite/api/v1/questions',
                                     headers={
                                         "content-type": "application/json"})
-        self.assertEqual(get_response.status, 200)
+        self.assertEqual(get_response.status_code, 200)
 
     def test_user_can_get_specific_question(self):
         """Method to test if a user can get a specific question"""
-        # First add a question
-        response = add_question()
-        self.assertEqual(response.status_code, 201)
+        question_details = {
+            "title": "How to kill Dracula",
+            "description": "How does one get the hell out of Vim from terminal?"}
+
+        response = self.app.post(
+            '/stackoverflowlite/api/v1/questions',
+            data=json.dumps(question_details),
+            content_type='application/json'
+        )
 
         # Attempt to get specific question
         get_response = self.app.get('/stackoverflowlite/api/v1/questions/1',
                                     headers={
                                         "content-type": "application/json"})
-        self.assertEqual(get_response.status, 200)
+        self.assertEqual(get_response.status_code, 200)
 
     def add_question(self):
         """Method to add new question"""
@@ -49,10 +52,10 @@ class TestQuestions(unittest.TestCase):
             "title": "How to exit Vim on Ubuntu",
             "description": "How does one get the hell out of Vim from terminal?"}
 
-            response = self.app.post(
-                '/stackoverflowlite/api/v1/questions',
-                data=json.dumps(question_details),
-                content_type='application/json'
-            )
+        response = self.app.post(
+            '/stackoverflowlite/api/v1/questions',
+            data=json.dumps(question_details),
+            content_type='application/json'
+        )
 
         return response
