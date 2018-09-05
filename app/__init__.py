@@ -4,6 +4,7 @@ from flask import Flask
 
 from .v1.views.auth import auth
 from .v1.views.questions import questions
+from .v1.views.answers import answers
 from instance.config import app_config
 
 
@@ -17,5 +18,6 @@ def create_app(config_name):
     # Register our blueprints
     app.register_blueprint(auth)
     app.register_blueprint(questions)
+    app.register_blueprint(answers)
 
     return app
