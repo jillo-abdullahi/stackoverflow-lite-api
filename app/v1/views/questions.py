@@ -44,8 +44,10 @@ def post_question():
 @questions.route('/questions', methods=['GET'])
 def get_questions():
     """method to fetch all questions"""
+    all_questions = question_instance.questions
 
-    return jsonify({"Questions": "All questions"})
+    response = jsonify({"All questions": all_questions})
+    return response, 200
 
 
 @questions.route('questions/<question_id>', methods=['GET'])
