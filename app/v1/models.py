@@ -21,3 +21,16 @@ class Question(object):
         """Method to add questions to questions dictionary"""
         id = str(len(self.questions) + 1)
         self.questions[str(id)] = question_details
+
+
+class Answer(object):
+    """Class for answers"""
+
+    def __init__(self):
+        self.answers = {}
+
+    def save(self, answer_details, question_id):
+        """Method to save new answer"""
+        answer_details["question_id"] = question_id
+        id = str(len(self.answers) + 1)
+        self.answers[id] = answer_details
