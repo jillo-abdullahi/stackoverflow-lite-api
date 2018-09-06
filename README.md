@@ -1,6 +1,7 @@
 [![Build Status](https://travis-ci.org/jillo-abdullahi/stackoverflow-lite-api.svg?branch=ft-questions)](https://travis-ci.org/jillo-abdullahi/stackoverflow-lite-api)
 [![Coverage Status](https://coveralls.io/repos/github/jillo-abdullahi/stackoverflow-lite-api/badge.svg?branch=ft-questions)](https://coveralls.io/github/jillo-abdullahi/stackoverflow-lite-api?branch=ft-questions)
 [![Maintainability](https://api.codeclimate.com/v1/badges/bea7461d642bc57f9021/maintainability)](https://codeclimate.com/github/jillo-abdullahi/stackoverflow-lite-api/maintainability)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/fef2dd471f8943d09084074478a31196)](https://www.codacy.com/app/jillo-abdullahi/stackoverflow-lite-api?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=jillo-abdullahi/stackoverflow-lite-api&amp;utm_campaign=Badge_Grade)
 
 
 # stackoverflow-lite
