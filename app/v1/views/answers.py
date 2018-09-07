@@ -2,7 +2,7 @@
 
 from flask import Blueprint, jsonify, request
 
-from app.utilities import check_keys, check_empty_dict
+from app.utilities import validate_answer
 from app.v1.models import Answer, Question
 
 answers = Blueprint("answers_blueprint", __name__,
@@ -17,18 +17,11 @@ def post_answer(question_id):
     """method to post a new answer"""
     answer_info = request.get_json()
 
-    # Check that all fields have been provided
-    if check_keys(answer_info, 1):
-        response = jsonify(
-            {"Error": "Please provide answer description"})
-        return response, 400
+    # Validation checks
+    if validate_answer(answer_info):
+        return validate_answer(answer_info)
 
-    # Check for empty values
-    if check_empty_dict(answer_info):
-        response = jsonify({"Error": "Description must not be empty"})
-        return response, 400
-
-    # Check of question with id exists
+    # Check if question with id exists
     all_questions = question_instance.questions
     for id in all_questions:
         if id not in all_questions.keys():
