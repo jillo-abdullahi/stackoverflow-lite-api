@@ -1,4 +1,6 @@
-# models.py
+"""File for all models"""
+
+
 class User(object):
     """Class for users"""
 

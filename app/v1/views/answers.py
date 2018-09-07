@@ -1,4 +1,4 @@
-# app/v1/views/answers.py
+"""File for view functions pertaining to answers"""
 
 from flask import Blueprint, jsonify, request
 
