@@ -2,7 +2,7 @@
 
 from flask import Blueprint, jsonify, request
 
-from app.utilities import validate_question, validate_question_title
+from app.utilities import validate_question
 from app.v1.models import Question
 
 questions = Blueprint("questions_blueprint", __name__,
@@ -21,9 +21,12 @@ def post_question():
         return validate_question(question_info)
 
     # Check if question already exists
-    if validate_question_title(question_info):
-        response = jsonify({"Error": "That question has already been asked"})
-        return response, 400
+    existing_questions = question_instance.questions
+    for id in existing_questions:
+        if question_info['title'].lower() == existing_questions[id]['title'].lower():
+            response = jsonify(
+                {"Error": "That question has already been asked"})
+            return response, 400
 
     # Add question
     existing_questions = question_instance.questions
