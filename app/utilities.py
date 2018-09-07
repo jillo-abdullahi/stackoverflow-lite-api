@@ -1,15 +1,6 @@
 """Utility functions to perform validations"""
 from flask import jsonify
 
-from app.v1.models import User, Question, Answer
-
-
-user_instance = User()
-question_instance = Question()
-answer_instance = Answer()
-
-# Validations for authentication
-
 
 def validate_login(args):
     """Function to validate user provided fields for login"""
@@ -30,14 +21,6 @@ def validate_signup(args):
     if check_keys(args, params, length):
         return check_keys(args, params, length)
 
-    # Check if user already exists
-    existing_users = user_instance.users
-    for id in existing_users:
-        if args['username'].lower() == existing_users[id]['username'].lower():
-            response = jsonify(
-                {"Error": "A user with username, {} already exists".format(args['username'])}), 400
-            return response
-
 
 def validate_question(args):
     """Function to validate question"""
@@ -46,15 +29,6 @@ def validate_question(args):
 
     # Check provided fields
     return check_keys(args, params, length)
-
-
-def validate_question_title(args):
-    """Function to check if question title already exists"""
-    existing_questions = question_instance.questions
-    for id in existing_questions:
-        if args['title'].lower() == existing_questions[id]['title'].lower():
-            return True
-    return False
 
 
 def validate_answer(args):
@@ -67,7 +41,7 @@ def validate_answer(args):
         return check_keys(args, params, length)
 
 
-# General utility functions
+# General utility function
 def check_keys(args, params, length):
     """Function to check if dict keys and values"""
 
