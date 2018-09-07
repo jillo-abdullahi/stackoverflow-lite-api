@@ -33,16 +33,16 @@ Use this guide to get this project up and running:
 
 ### Getting started
 
-**Instruction** | **Command**
---- | ---
-1. Clone the repo into a folder of your choice | `git clone --depth=50 https://github.com/jillo-abdullahi/stackoverflow-lite-api.git`
-2. Navigate to the cloned folder | `cd stackoverflow-lite-api`
-3. Create a virtual environment |`virtualenv venv`
-4. Activate the virtual environment you just created | `source venv/bin/activate`
-5. Install all dependencies into your virtual environment | `pip install -r requirements.txt`
-6. Confirm you have all packages installed | `pip freeze`
-7. Set environment variables for `APP_SETTINGS` | `export APP_SETTINGS="development"`
-8. Set the entry point for the app | `export FLASK_APP="run.py"`
+| **Instruction** | **Command** |
+| --- | --- |
+| 1. Clone the repo into a folder of your choice | `git clone --depth=50 https://github.com/jillo-abdullahi/stackoverflow-lite-api.git` |
+| 2. Navigate to the cloned folder | `cd stackoverflow-lite-api`|
+| 3. Create a virtual environment |`virtualenv venv` |
+| 4. Activate the virtual environment you just created | `source venv/bin/activate` |
+| 5. Install all dependencies into your virtual environment | `pip install -r requirements.txt` |
+| 6. Confirm you have all packages installed | `pip freeze` |
+| 7. Set environment variables for `APP_SETTINGS` | `export APP_SETTINGS="development"` |
+| 8. Set the entry point for the app | `export FLASK_APP="run.py"` |
 
 ### Run the service
 
