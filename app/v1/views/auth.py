@@ -21,6 +21,14 @@ def user_signup():
     if validate_signup(user_info):
         return validate_signup(user_info)
 
+    # Check if user already exists
+    existing_users = user_instance.users
+    for id in existing_users:
+        if user_info['username'].lower() == existing_users[id]['username'].lower():
+            response = jsonify(
+                {"Error": "A user with username, {} already exists".format(user_info['username'])}), 400
+            return response
+
     existing_users = user_instance.users
     user_info["password"] = generate_password_hash(user_info["password"])
     user_info[
