@@ -1,4 +1,4 @@
-# Tests for questions
+# Test file for questions"""
 
 import unittest
 import json
@@ -15,10 +15,23 @@ class TestQuestions(unittest.TestCase):
         self.app = create_app("testing")
         self.app = self.app.test_client()
 
+        self.question_details = {
+            "title": "How to exit Vim on Ubuntu",
+            "description": "How does one get the hell out of Vim from terminal?"}
+
     def test_user_can_post_question(self):
         """Method to test if a new question can be added"""
-        response = self.add_question()
+        response = self.app.post(
+            '/stackoverflowlite/api/v1/questions',
+            data=json.dumps(self.question_details),
+            content_type='application/json'
+        )
         self.assertEqual(response.status_code, 201)
+
+        # Test message
+        message = json.loads(response.get_data(as_text=True))[
+            'message']
+        self.assertEqual(message, 'Question added successfully')
 
     def test_user_can_get_all_questions(self):
         """Method to test if user can get all questions"""
@@ -46,20 +59,6 @@ class TestQuestions(unittest.TestCase):
                                     headers={
                                         "content-type": "application/json"})
         self.assertEqual(get_response.status_code, 200)
-
-    def add_question(self):
-        """Method to add new question"""
-        question_details = {
-            "title": "How to exit Vim on Ubuntu",
-            "description": "How does one get the hell out of Vim from terminal?"}
-
-        response = self.app.post(
-            '/stackoverflowlite/api/v1/questions',
-            data=json.dumps(question_details),
-            content_type='application/json'
-        )
-
-        return response
 
     def tearDown(self):
         """Delete content of questions after test"""
