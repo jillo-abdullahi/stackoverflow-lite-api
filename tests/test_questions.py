@@ -53,6 +53,7 @@ class TestQuestions(unittest.TestCase):
             data=json.dumps(question_details),
             content_type='application/json'
         )
+        self.assertEqual(response.status_code, 201)
 
         # Attempt to get specific question
         get_response = self.app.get('/stackoverflowlite/api/v1/questions/1',

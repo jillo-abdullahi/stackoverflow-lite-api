@@ -33,7 +33,6 @@ def post_answer(question_id):
             response = jsonify(
                 {"message": "Answer successfully posted", "Answers": answer_instance.answers})
             return response, 201
-            break
     else:
         response = jsonify(
             {"Error": "Question with that id doesn't exist"})
