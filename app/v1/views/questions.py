@@ -22,8 +22,8 @@ def post_question():
 
     # Check if question already exists
     existing_questions = question_instance.questions
-    for id in existing_questions:
-        if question_info['title'].lower() == existing_questions[id]['title'].lower():
+    for qn_id in existing_questions:
+        if question_info['title'].lower() == existing_questions[qn_id]['title'].lower():
             response = jsonify(
                 {"Error": "That question has already been asked"})
             return response, 400
@@ -51,9 +51,9 @@ def fetch_specific_question(question_id):
     all_questions = question_instance.questions
 
     # Check if question exists
-    for id in all_questions:
-        if question_id == id:
-            response = jsonify({"message": all_questions[id]})
+    for qn_id in all_questions:
+        if question_id == qn_id:
+            response = jsonify({"message": all_questions[qn_id]})
             return response, 200
     response = jsonify({"Error": "A question with that id doesn't exist"})
     return response, 404

@@ -9,8 +9,8 @@ class User(object):
 
     def save(self, user_details):
         """Method to create user and add to user dictionary"""
-        id = str(len(self.users) + 1)
-        self.users[str(id)] = user_details
+        user_id = str(len(self.users) + 1)
+        self.users[str(user_id)] = user_details
 
 
 class Question(object):
@@ -21,8 +21,8 @@ class Question(object):
 
     def save(self, question_details):
         """Method to add questions to questions dictionary"""
-        id = str(len(self.questions) + 1)
-        self.questions[str(id)] = question_details
+        question_details["question_id"] = str(len(self.questions) + 1)
+        self.questions[question_details["question_id"]] = question_details
 
 
 class Answer(object):
@@ -34,5 +34,5 @@ class Answer(object):
     def save(self, answer_details, question_id):
         """Method to save new answer"""
         answer_details["question_id"] = question_id
-        id = str(len(self.answers) + 1)
-        self.answers[id] = answer_details
+        answer_id = str(len(self.answers) + 1)
+        self.answers[answer_id] = answer_details
