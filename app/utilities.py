@@ -1,18 +1,66 @@
-# app/utilities.py
+"""Utility functions to perform validations"""
+from flask import jsonify
 
 
-def check_keys(args, length):
-    """Function to check if dict keys are provided"""
-    params = ['email', 'username', 'password', 'full-name']
-    for key in args.keys():
-        if key not in params or len(args) != length:
-            return True
-    return False
+def validate_login(args):
+    """Function to validate user provided fields for login"""
+    params = ['email', 'password']
+    length = 2
+
+    # Check provided fields
+    if check_keys(args, params, length):
+        return check_keys(args, params, length)
 
 
-def check_empty_dict(args):
-    """Function to check if an empty value's been given for any key"""
+def validate_signup(args):
+    """Function to validate user-provided info when signing up"""
+    params = ['username', 'email', 'password', 'confirm-password']
+    length = 4
+
+    # Check fields provided
+    if check_keys(args, params, length):
+        return check_keys(args, params, length)
+
+
+def validate_question(args):
+    """Function to validate question"""
+    params = ['title', 'description']
+    length = 2
+
+    # Check provided fields
+    return check_keys(args, params, length)
+
+
+def validate_answer(args):
+    """Function to validate answer"""
+    params = ['description']
+    length = 1
+
+    # Check provided fields
+    if check_keys(args, params, length):
+        return check_keys(args, params, length)
+
+
+# General utility function
+def check_keys(args, params, length):
+    """Function to check if dict keys and values"""
+
+    # Check if required keys have been provided
+    for key in params:
+        if key not in args:
+            response = jsonify(
+                {"Error": "Please provide your {}".format(key)}), 400
+            return response
+
+    # check if values provided are empty
     for key in args:
         if not args[key].strip():
-            return True
-    return False
+            response = jsonify(
+                {"Error": "{} must not be empty".format(key)}), 400
+            return response
+
+    # Check if correct number of fields provided
+    if len(args) != length:
+        response = jsonify(
+            {"Error": "Fields required: {}".format(", ".join(params))}), 400
+        return response

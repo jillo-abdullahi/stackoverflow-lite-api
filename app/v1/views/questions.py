@@ -1,49 +1,59 @@
-# app/v1/views/questions
+"""File for view functions for getting and posting questions"""
 
 from flask import Blueprint, jsonify, request
 
+from app.utilities import validate_question
+from app.v1.models import Question
+
 questions = Blueprint("questions_blueprint", __name__,
-                      url_prefix="/stackoverflowlite/api/v1/questions")
+                      url_prefix="/stackoverflowlite/api/v1")
+
+question_instance = Question()
 
 
-@questions.route('/', methods=['POST'])
+@questions.route('/questions', methods=['POST'])
 def post_question():
     """method to post a new question"""
     question_info = request.get_json()
 
-    return jsonify({"Question": question_info})
+    # validate question
+    if validate_question(question_info):
+        return validate_question(question_info)
+
+    # Check if question already exists
+    existing_questions = question_instance.questions
+    for qn_id in existing_questions:
+        if question_info['title'].lower() == existing_questions[qn_id]['title'].lower():
+            response = jsonify(
+                {"Error": "That question has already been asked"})
+            return response, 400
+
+    # Add question
+    existing_questions = question_instance.questions
+    question_instance.save(question_info)
+    response = jsonify(
+        {"message": "Question added successfully", "Questions": existing_questions})
+    return response, 201
 
 
-@questions.route('/', methods=['GET'])
+@questions.route('/questions', methods=['GET'])
 def get_questions():
     """method to fetch all questions"""
+    all_questions = question_instance.questions
 
-    return jsonify({"Questions": "All questions"})
+    response = jsonify({"All questions": all_questions})
+    return response, 200
 
 
-@questions.route('/<question_id>', methods=['GET'])
+@questions.route('/questions/<question_id>', methods=['GET'])
 def fetch_specific_question(question_id):
     """Method to fetch a specific question using id"""
+    all_questions = question_instance.questions
 
-    return jsonify({"Question": "Question matching id"})
-
-
-@questions.route('/<question_id>', methods=['DELETE'])
-def delete_specific_question(question_id):
-    """Method to delete a specific question"""
-
-    return jsonify({"message": "Question deleted if id matches"})
-
-
-@questions.route('/<question_id>/answers', methods=['POST'])
-def post_answer_to_question(question_id):
-    """Method to post answer to a specific question"""
-
-    return jsonify({"message": "Success if question exists"})
-
-
-@questions.route('/<question_id>/answers/<answer_id>', methods=['PUT'])
-def accept_answer(question_id, answer_id):
-    """Method to accept an answer to a specific question"""
-
-    return jsonify({"message": "Success if question and answer found"})
+    # Check if question exists
+    for qn_id in all_questions:
+        if question_id == qn_id:
+            response = jsonify({"message": all_questions[qn_id]})
+            return response, 200
+    response = jsonify({"Error": "A question with that id doesn't exist"})
+    return response, 404
