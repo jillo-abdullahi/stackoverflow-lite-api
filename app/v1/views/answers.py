@@ -23,24 +23,15 @@ def post_answer(question_id):
 
     # Check if question with id exists
     all_questions = question_instance.questions
-    import pdb
-    pdb.set_trace()
     for qn_id in all_questions:
-        if question_id in all_questions[qn_id]["question_id"]:
-
-            answer_instance.save(answer_info, question_id)
-
+        if question_id not in question[qn_id]["question_id"]:
             response = jsonify(
-                {"message": "Answer successfully posted", "Answers": answer_instance.answers})
-            return response, 201
-    else:
-        response = jsonify(
-            {"Error": "Question with that id doesn't exist"})
-        return response, 404
-
-    # if question_id != all_questions[qn_id]["question_id"]:
-    #     response = jsonify(
-    #         {"Error": "Question with that id doesn't exist"})
-    #     return response, 404
+                {"Error": "Question with that id doesn't exist"})
+            return response, 404
 
     # Save answer
+    answer_instance.save(answer_info, question_id)
+
+    response = jsonify(
+        {"message": "Answer successfully posted", "Answers": answer_instance.answers})
+    return response, 201
