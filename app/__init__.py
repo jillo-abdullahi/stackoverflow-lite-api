@@ -1,9 +1,10 @@
 # app/__init__.py
 
-from flask import Flask
+from flask import Flask, render_template
 
 from .v1.views.auth import auth
 from .v1.views.questions import questions
+from .v1.views.answers import answers
 from instance.config import app_config
 
 
@@ -17,5 +18,12 @@ def create_app(config_name):
     # Register our blueprints
     app.register_blueprint(auth)
     app.register_blueprint(questions)
+    app.register_blueprint(answers)
+
+    @app.route('/')
+    @app.route('/favicon.ico')
+    def api_documentation():
+        """route for API documentation"""
+        return render_template('version1.html')
 
     return app
