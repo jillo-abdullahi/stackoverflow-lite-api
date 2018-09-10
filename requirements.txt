@@ -9,4 +9,6 @@ pylint==1.5.2
 virtualenv==15.2.0
 virtualenv-clone==0.3.0
 gunicorn==19.9.0
+waitress==1.1.0
+
 
