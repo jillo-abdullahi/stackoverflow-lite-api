@@ -91,7 +91,7 @@ paths:
         '200':
           description: 'Question details returned'
         '400':
-          description: 'Question with specified does not exist'
+          description: 'Question with specified id does not exist'
       tags:
         - Questions  
   /questions/<question_id>/answers:
