@@ -20,8 +20,8 @@ def create_app(config_name):
     app.register_blueprint(questions)
     app.register_blueprint(answers)
 
-    @app.route('/')
-    @app.route('/favicon.ico')
+    @app.route('/', methods=['GET'])
+    @app.route('/favicon.ico', methods=['GET'])
     def api_documentation():
         """route for API documentation"""
         return render_template('version1.html')
